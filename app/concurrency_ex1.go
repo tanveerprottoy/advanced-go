@@ -1,9 +1,9 @@
-package main
+package app
 
 import "fmt"
 
 // limit goroutine with buffer channel
-func channelBuffer() {
+func ChannelBuffer() {
 	ch := make(chan int, 15)
 	/*ch <- v    // Send v to channel ch.
 	  v := <-ch  // Receive from ch, and
@@ -14,8 +14,4 @@ func channelBuffer() {
 	v := <-ch
 	fmt.Println(v)
 	fmt.Println(<-ch)
-}
-
-func main() {
-	go channelBuffer()
 }

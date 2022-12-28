@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"fmt"
@@ -69,7 +69,7 @@ func (c *SafeCounter) Value(key string) int {
 	return c.v[key]
 }
 
-func initGoRoutineEx() {
+func InitGoRoutineEx() {
 	go say(
 		"RSGC1-F04",
 		20,
@@ -80,7 +80,7 @@ func initGoRoutineEx() {
 	)
 }
 
-func initChannelEx() {
+func InitChannelEx() {
 	s := []int{7, 2, 8, -9, 4, 0}
 	c := make(chan int)
 	go sum(s[:len(s)/2], c)
@@ -89,7 +89,7 @@ func initChannelEx() {
 	fmt.Println(x, y, x+y)
 }
 
-func initChannelBufferEx() {
+func InitChannelBufferEx() {
 	ch := make(chan int, 2)
 	ch <- 1
 	ch <- 2
@@ -97,7 +97,7 @@ func initChannelBufferEx() {
 	fmt.Println(<-ch)
 }
 
-func initChannelCloseEx() {
+func InitChannelCloseEx() {
 	c := make(chan int, 10)
 	go fibonacci(cap(c), c)
 	for i := range c {
@@ -105,7 +105,7 @@ func initChannelCloseEx() {
 	}
 }
 
-func initChannelSelectEx() {
+func InitChannelSelectEx() {
 	c := make(chan int)
 	quit := make(chan int)
 	go func() {
@@ -117,7 +117,7 @@ func initChannelSelectEx() {
 	fibonacciSelect(c, quit)
 }
 
-func initDefaultSelectionEx() {
+func InitDefaultSelectionEx() {
 	tick := time.Tick(100 * time.Millisecond)
 	boom := time.After(500 * time.Millisecond)
 	for {
@@ -135,7 +135,7 @@ func initDefaultSelectionEx() {
 }
 
 // mutual exclusion
-func initMutexEx() {
+func InitMutexEx() {
 	tick := time.Tick(100 * time.Millisecond)
 	boom := time.After(500 * time.Millisecond)
 	for {
@@ -152,7 +152,7 @@ func initMutexEx() {
 	}
 }
 
-func initWaitGroupEx() {
+func InitWaitGroupEx() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 
@@ -164,13 +164,4 @@ func initWaitGroupEx() {
 	wg.Wait()
 }
 
-func main() {
-	initGoRoutineEx()
-	initChannelEx()
-	initChannelBufferEx()
-	initChannelCloseEx()
-	initChannelSelectEx()
-	initDefaultSelectionEx()
-	initMutexEx()
-	initWaitGroupEx()
-}
+

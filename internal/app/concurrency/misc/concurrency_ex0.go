@@ -6,10 +6,7 @@ import (
 	"time"
 )
 
-func say(
-	name string,
-	count int,
-) {
+func say(name string, count int) {
 	for i := 0; i < count; i++ {
 		time.Sleep(time.Millisecond * 300)
 		fmt.Println(i, name)
@@ -70,14 +67,8 @@ func (c *SafeCounter) Value(key string) int {
 }
 
 func InitGoRoutineEx() {
-	go say(
-		"RSGC1-F04",
-		20,
-	)
-	say(
-		"VY Canis Majoris",
-		20,
-	)
+	go say("RSGC1-F04", 20)
+	say("VY Canis Majoris", 20)
 }
 
 func InitChannelEx() {
@@ -163,5 +154,3 @@ func InitWaitGroupEx() {
 
 	wg.Wait()
 }
-
-

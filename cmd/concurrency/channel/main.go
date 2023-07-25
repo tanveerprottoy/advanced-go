@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/tanveerprottoy/concurrency-go/internal/app/concurrency/channel"
+	"github.com/tanveerprottoy/concurrency-go/internal/concurrency/channel"
 )
 
 func main() {

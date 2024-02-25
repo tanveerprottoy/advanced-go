@@ -12,4 +12,5 @@ func main() {
 	concurrency.InitMutexEx()
 	concurrency.InitWaitGroupEx()
 	go concurrency.ChannelBuffer()
+	concurrency.Timeout()
 }

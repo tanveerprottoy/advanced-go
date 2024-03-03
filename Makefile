@@ -1,7 +1,10 @@
-run-async:
-	go run cmd/concurrency/async/main.go
+run-goroutine:
+	go run cmd/concurrency/goroutine/main.go
 
-run-concurrency:
+run-channel:
+	go run cmd/concurrency/channel/main.go
+
+run-concurrency-misc:
 	go run cmd/concurrency/misc/main.go
 
 run-channel:

@@ -1,4 +1,4 @@
-package structpkg
+package structs
 
 func AnonymousStruct() any {
 	return struct {

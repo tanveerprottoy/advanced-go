@@ -12,6 +12,7 @@ func main() {
 		structs.WithMod(true),
 		structs.WithSuperCharger("turbo"),
 	)
+	// prints:
 	fmt.Printf("Car: %+v\n", c)
 	fmt.Printf("Class: %s\n", c.Class())
 	fmt.Printf("Class: %t\n", c.Mod())

@@ -7,3 +7,4 @@ func AnonymousStruct() any {
 		"a message",
 	}
 }
+

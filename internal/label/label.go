@@ -1,6 +1,6 @@
 package label
 
-func LabelExample() {
+func SimpleEx() {
 	a := [5][5]int{{1, 2}, {2, 5}}
 OuterLoop:
 	for i := 0; i < len(a); i++ {

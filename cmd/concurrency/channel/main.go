@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/tanveerprottoy/concurrency-go/internal/concurrency/channel"
+	"github.com/tanveerprottoy/concurrency-go/concurrency/channel"
 )
 
 func sumSplit(vals []int) {
@@ -47,7 +47,7 @@ func worker() {
 	go channel.Worker(jobs, results)
 	go channel.Worker(jobs, results)
 	go channel.Worker(jobs, results)
-	
+
 	for i := 0; i < 100; i++ {
 		jobs <- i
 	}

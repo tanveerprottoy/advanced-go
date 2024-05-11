@@ -9,3 +9,6 @@ run-concurrency-misc:
 
 run-channel:
 	go run cmd/concurrency/channel/main.go
+
+run-log:
+	go run cmd/logext/main.go

@@ -8,12 +8,14 @@ type ComponentThreadSafe struct {
 }
 
 func NewComponentThreadSafe() *ComponentThreadSafe {
-	c := new(ComponentThreadSafe)
-	c.Data = make(map[string]string)
-	return c
+	return &ComponentThreadSafe{Data: make(map[string]string)}
 }
 
-func (c *ComponentThreadSafe) HasKey(key string) bool {
+func (c *ComponentThreadSafe) HasKey(key string, requireLock bool) bool {
+	if requireLock {
+		c.Mutex.Lock()
+		defer c.Mutex.Unlock()
+	}
 	if _, ok := c.Data[key]; ok {
 		return true
 	} else {
@@ -24,8 +26,14 @@ func (c *ComponentThreadSafe) HasKey(key string) bool {
 func (c *ComponentThreadSafe) Add(key, value string) {
 	c.Mutex.Lock()
 	defer c.Mutex.Unlock()
-	if c.HasKey(key) {
+	if c.HasKey(key, false) {
 		return
 	}
 	c.Data[key] = value
+}
+
+func (c *ComponentThreadSafe) Read(key string) string {
+	c.Mutex.Lock()
+	defer c.Mutex.Unlock()
+	return c.Data[key]
 }

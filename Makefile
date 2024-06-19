@@ -12,3 +12,9 @@ run-channel:
 
 run-log:
 	go run cmd/logext/main.go
+
+run-strtucts:
+	go run cmd/strtucts/main.go
+
+run-pipeline:
+	go run cmd/pipeline/main.go

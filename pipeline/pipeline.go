@@ -45,10 +45,10 @@ func sq(in <-chan int) <-chan int {
 	return out
 }
 
-// The Ex function sets up the pipeline and runs the final stage:
+// The Executer function sets up the pipeline and runs the final stage:
 // it receives values from the second stage and prints each one,
 // until the channel is closed:
-func Ex() {
+func Executer() {
 	// Set up the pipeline.
 	c := gen(2, 3)
 	out := sq(c)
@@ -91,7 +91,7 @@ func merge(cs ...<-chan int) <-chan int {
 	return out
 }
 
-func ExFan() {
+func ExecuterFan() {
 	in := gen(2, 3)
 
 	// Distribute the sq work across two goroutines that both read from in.

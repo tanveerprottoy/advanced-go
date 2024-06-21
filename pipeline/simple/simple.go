@@ -3,7 +3,7 @@ package simple
 import "log"
 
 // returns <-chan string for read only
-func producer(strings []string) (<-chan string, error) {
+func producer(strings []string) <-chan string {
 	out := make(chan string)
 
 	go func() {
@@ -19,7 +19,7 @@ func producer(strings []string) (<-chan string, error) {
 		}
 	}()
 
-	return out, nil
+	return out
 }
 
 // a sink, or data sink generally refers to the destination of data flow.
@@ -31,12 +31,9 @@ func sink(values <-chan string) {
 }
 
 func Executer() {
-	source := []string{"foo", "bar", "bax"}
+	src := []string{"foo", "bar", "football"}
 
-	out, err := producer(source)
-	if err != nil {
-		log.Printf("err: %v\n", err)
-	}
+	out := producer(src)
 
 	sink(out)
 }

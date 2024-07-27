@@ -4,6 +4,9 @@ import "sync"
 
 // SafeCounter is safe to use concurrently.
 type SafeCounter struct {
+	// sync.Mutex is already initialized
+	// *sync.Mutex will have to be initialized
+	// as &sync.Mutex{}
 	mu sync.Mutex
 	v  map[string]int
 }

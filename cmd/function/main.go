@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/tanveerprottoy/concurrency-go/function"
+	"github.com/tanveerprottoy/advanced-go/function"
 )
 
 func main() {

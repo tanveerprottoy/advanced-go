@@ -17,4 +17,4 @@ run-strtucts:
 	go run cmd/strtucts/main.go
 
 run-pipeline:
-	go run cmd/pipeline/main.go
+	go run cmd/concurrency/pipeline/main.go

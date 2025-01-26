@@ -1,6 +1,6 @@
 package main
 
-import "github.com/tanveerprottoy/concurrency-go/concurrency/goroutine"
+import "github.com/tanveerprottoy/advanced-go/concurrency/goroutine"
 
 func main() {
 	goroutine.CallerFunc()

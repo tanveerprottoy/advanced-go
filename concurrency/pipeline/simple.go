@@ -1,4 +1,4 @@
-package simple
+package pipeline
 
 import "log"
 
@@ -30,7 +30,7 @@ func sink(values <-chan string) {
 	}
 }
 
-func Executer() {
+func ExecuterSimple() {
 	src := []string{"foo", "bar", "football"}
 
 	out := producer(src)

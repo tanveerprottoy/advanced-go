@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/tanveerprottoy/concurrency-go/concurrency/channel"
+	"github.com/tanveerprottoy/advanced-go/concurrency/channel"
 )
 
 func sumSplit(vals []int) {

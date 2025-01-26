@@ -21,12 +21,15 @@ import (
 // when all the values have been sent:
 func gen(nums ...int) <-chan int {
 	out := make(chan int)
+
 	go func() {
 		for _, n := range nums {
 			out <- n
 		}
+
 		close(out)
 	}()
+
 	return out
 }
 
@@ -36,19 +39,22 @@ func gen(nums ...int) <-chan int {
 // the outbound channel:
 func sq(in <-chan int) <-chan int {
 	out := make(chan int)
+	
 	go func() {
 		for n := range in {
 			out <- n * n
 		}
+
 		close(out)
 	}()
+	
 	return out
 }
 
 // The Executer function sets up the pipeline and runs the final stage:
 // it receives values from the second stage and prints each one,
 // until the channel is closed:
-func Executer() {
+func ExecuterSquarer() {
 	// Set up the pipeline.
 	c := gen(2, 3)
 	out := sq(c)
@@ -75,9 +81,12 @@ func merge(cs ...<-chan int) <-chan int {
 		for n := range c {
 			out <- n
 		}
+
 		wg.Done()
 	}
+
 	wg.Add(len(cs))
+
 	for _, c := range cs {
 		go output(c)
 	}
@@ -86,12 +95,14 @@ func merge(cs ...<-chan int) <-chan int {
 	// done.  This must start after the wg.Add call.
 	go func() {
 		wg.Wait()
+
 		close(out)
 	}()
+	
 	return out
 }
 
-func ExecuterFan() {
+func ExecuterSquarerFan() {
 	in := gen(2, 3)
 
 	// Distribute the sq work across two goroutines that both read from in.

@@ -1,6 +1,6 @@
 package main
 
-import concurrency "github.com/tanveerprottoy/concurrency-go/concurrency/misc"
+import concurrency "github.com/tanveerprottoy/advanced-go/concurrency/misc"
 
 func main() {
 	concurrency.InitGoRoutineEx()

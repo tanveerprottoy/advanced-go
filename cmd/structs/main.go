@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/tanveerprottoy/concurrency-go/structs"
+	"github.com/tanveerprottoy/advanced-go/structs"
 )
 
 func main() {

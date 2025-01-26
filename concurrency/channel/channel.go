@@ -6,6 +6,7 @@ import (
 
 func Receive(ch chan int) {
 	fmt.Println(ch)
+
 	go func(ch chan int) {
 		ch <- 2
 	}(ch)
@@ -13,26 +14,32 @@ func Receive(ch chan int) {
 
 func Sum(vals []int, ch chan int) {
 	res := 0
+
 	if len(vals) == 0 {
 		ch <- res
 		return
 	}
+
 	for _, v := range vals {
 		res += v
 	}
+
 	// send res to ch
 	ch <- res
 }
 
 func Multiply(vals []int, ch chan int) {
 	res := 1
+	
 	if len(vals) == 0 {
 		ch <- res
 		return
 	}
+
 	for _, v := range vals {
 		res *= v
 	}
+
 	// send res to ch
 	ch <- res
 }
@@ -58,15 +65,18 @@ func Fibonacci(n int) int {
 	if n <= 1 {
 		return n
 	}
+
 	return Fibonacci(n-1) + Fibonacci(n-1)
 }
 
 func Fibonacci2(n int, ch chan int) {
 	x, y := 0, 1
+	
 	for i := 0; i < n; i++ {
 		ch <- x
 		x, y = y, x+y
 	}
+	
 	close(ch)
 }
 

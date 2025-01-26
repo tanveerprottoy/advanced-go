@@ -1,6 +1,6 @@
 package main
 
-import "github.com/tanveerprottoy/concurrency-go/logext"
+import "github.com/tanveerprottoy/advanced-go/logext"
 
 func main() {
 	logext.Ex()

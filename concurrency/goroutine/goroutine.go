@@ -14,11 +14,14 @@ func SleeperFunc(ch chan int, d time.Duration) {
 
 func CallerFunc() {
 	ch := make(chan int)
+
 	// want to wait and get some value
 	// from the SleeperFunc goroutine
 	// for that sending the channel
 	go SleeperFunc(ch, time.Second*5)
+
 	// receive the value from channel
 	res := <-ch
+	
 	fmt.Println(res)
 }

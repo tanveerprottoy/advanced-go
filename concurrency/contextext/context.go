@@ -21,7 +21,7 @@ func establishNetworkConnection(ch chan<- bool) {
 	} else {
 		log.Println("Failed to establish network connection")
 
-		// simulate hanging forever
+		// simulate hanging long time
 		time.Sleep(10 * time.Minute)
 	}
 

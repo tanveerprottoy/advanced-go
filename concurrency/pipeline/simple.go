@@ -2,6 +2,7 @@ package pipeline
 
 import "log"
 
+// a producer aka source is the first stage
 // returns <-chan string for read only
 func producer(strings []string) <-chan string {
 	out := make(chan string)
@@ -22,11 +23,12 @@ func producer(strings []string) <-chan string {
 	return out
 }
 
-// a sink, or data sink generally refers to the destination of data flow.
+// a consumer, or data consumer generally refers to the destination of data flow
+// it's the last stage of a pipeline
 // values <-chan string is a read only channel
-func sink(values <-chan string) {
-	for value := range values {
-		log.Println(value)
+func consumer(values <-chan string) {
+	for v := range values {
+		log.Println(v)
 	}
 }
 
@@ -35,5 +37,5 @@ func ExecuterSimple() {
 
 	out := producer(src)
 
-	sink(out)
+	consumer(out)
 }

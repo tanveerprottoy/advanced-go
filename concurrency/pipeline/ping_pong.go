@@ -1,7 +1,6 @@
 package pipeline
 
 import (
-	"log"
 	"time"
 )
 
@@ -9,16 +8,16 @@ type Ball struct {
 	hits int
 }
 
-func player(name string, table chan *Ball) {
+func player(table chan *Ball, name string) {
 	for {
 		ball := <-table
 		ball.hits++
 
 		println(name, ball.hits)
 
-		table <- ball
+		time.Sleep(100 * time.Millisecond)
 
-		log.Printf("running player in loop, table: %v", table)
+		table <- ball
 	}
 }
 
@@ -26,9 +25,9 @@ func ExecuterPingPong() {
 	table := make(chan *Ball)
 
 	// run player in separate goroutines
-	go player("ping", table)
+	go player(table, "ping")
 
-	go player("pong", table)
+	go player(table, "pong")
 
 	// start the game
 	table <- new(Ball)
@@ -37,11 +36,14 @@ func ExecuterPingPong() {
 	// which will cause the player function
 	// to keep running one after another
 	// through the table channel
-	time.Sleep(1 * time.Microsecond)
+	time.Sleep(1 * time.Second)
 
-	log.Println("main goroutine resumed")
+	// log.Println("main goroutine resumed")
 
 	// when sleep is done
 	// stop the game
+	// this will exit the main goroutine
+	// but the other two will not exit
+	// which is a leak
 	<-table
 }

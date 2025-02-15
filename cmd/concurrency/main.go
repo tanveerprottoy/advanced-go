@@ -1,6 +1,6 @@
 package main
 
-import concurrency "github.com/tanveerprottoy/advanced-go/concurrency/misc"
+import concurrency "github.com/tanveerprottoy/advanced-go/concurrency"
 
 func main() {
 	concurrency.InitGoRoutineEx()
@@ -13,4 +13,6 @@ func main() {
 	concurrency.InitWaitGroupEx()
 	go concurrency.ChannelBuffer()
 	concurrency.Timeout()
+
+	concurrency.ExecuterPingPong()
 }

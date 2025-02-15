@@ -1,15 +1,12 @@
 package pipeline
 
 import (
+	"context"
 	"log"
 	"time"
 )
 
-type Ball struct {
-	hits int
-}
-
-func player(table chan *Ball, name string) {
+func playerCtx(ctx context.Context, table chan *Ball, name string) {
 	for {
 		ball := <-table
 		ball.hits++
@@ -19,16 +16,27 @@ func player(table chan *Ball, name string) {
 		time.Sleep(100 * time.Millisecond)
 
 		table <- ball
+
+		// check for context deadline or cancelled
+		// before starting the loop
+		if ctx.Err() == context.DeadlineExceeded || ctx.Err() == context.Canceled {
+			// break the loop
+			break
+		}
 	}
 }
 
-func ExecuterPingPong() {
+func ExecuterPingPongCtx() {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+
+	defer cancel()
+
 	table := make(chan *Ball)
 
 	// run player in separate goroutines
-	go player(table, "ping")
+	go playerCtx(ctx, table, "ping")
 
-	go player(table, "pong")
+	go playerCtx(ctx, table, "pong")
 
 	// start the game
 	table <- new(Ball)

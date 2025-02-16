@@ -3,20 +3,20 @@ package concurrency
 import "sync"
 
 type ComponentThreadSafe struct {
-	Data  map[string]string
-	Mutex sync.Mutex
+	data  map[string]string
+	mutex sync.Mutex
 }
 
 func NewComponentThreadSafe() *ComponentThreadSafe {
-	return &ComponentThreadSafe{Data: make(map[string]string)}
+	return &ComponentThreadSafe{data: make(map[string]string)}
 }
 
 func (c *ComponentThreadSafe) HasKey(key string, requireLock bool) bool {
 	if requireLock {
-		c.Mutex.Lock()
-		defer c.Mutex.Unlock()
+		c.mutex.Lock()
+		defer c.mutex.Unlock()
 	}
-	if _, ok := c.Data[key]; ok {
+	if _, ok := c.data[key]; ok {
 		return true
 	} else {
 		return false
@@ -24,16 +24,16 @@ func (c *ComponentThreadSafe) HasKey(key string, requireLock bool) bool {
 }
 
 func (c *ComponentThreadSafe) Add(key, value string) {
-	c.Mutex.Lock()
-	defer c.Mutex.Unlock()
+	c.mutex.Lock()
+	defer c.mutex.Unlock()
 	if c.HasKey(key, false) {
 		return
 	}
-	c.Data[key] = value
+	c.data[key] = value
 }
 
 func (c *ComponentThreadSafe) Read(key string) string {
-	c.Mutex.Lock()
-	defer c.Mutex.Unlock()
-	return c.Data[key]
+	c.mutex.Lock()
+	defer c.mutex.Unlock()
+	return c.data[key]
 }

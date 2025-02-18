@@ -15,3 +15,6 @@ run-strtucts:
 
 run-pipeline:
 	go run cmd/concurrency/pipeline/main.go
+
+run-waitgroup:
+	go run cmd/concurrency/waitgroup/main.go

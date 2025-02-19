@@ -16,16 +16,16 @@ func hashAndSendSimple(r io.Reader) {
 	}
 	log.Println(string(bytes))
 
-	w := sha256.New()
-	w.Write(bytes)
-	sha := hex.EncodeToString(w.Sum(nil))
+	h := sha256.New()
+	h.Write(bytes)
+	sha := hex.EncodeToString(h.Sum(nil))
 	log.Println(sha)
 }
 
 func hashAndSend(r io.Reader) {
 	w := sha256.New()
 
-	//any reads from tee will read from r and write to w
+	// any reads from tee will read from r and write to w
 	tee := io.TeeReader(r, w)
 
 	sendReader(tee)

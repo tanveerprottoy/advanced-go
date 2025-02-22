@@ -1,4 +1,4 @@
-package contextexample
+package contextex
 
 import (
 	"context"

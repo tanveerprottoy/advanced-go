@@ -9,6 +9,19 @@ import (
 	"strings"
 )
 
+/*
+tee reader
+  ... | step 0 | step 1 | step 3 | ...
+
+>----->------>----->------┬------>------>------>----->
+[stdin]                   |                   [stdout]
+                          |
+                          |
+                          v
+                       [log.log]
+
+*/
+
 func hashAndSendSimple(r io.Reader) {
 	bytes, err := io.ReadAll(r)
 	if err != nil {
@@ -29,6 +42,7 @@ func hashAndSend(r io.Reader) {
 	tee := io.TeeReader(r, w)
 
 	sendReader(tee)
+
 	sha := hex.EncodeToString(w.Sum(nil))
 	fmt.Println(sha)
 }
@@ -41,8 +55,10 @@ func sendReader(data io.Reader) {
 		if err == io.EOF {
 			break
 		}
+
 		log.Print(string(buff))
 	}
+
 	log.Println("")
 }
 

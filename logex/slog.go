@@ -1,4 +1,4 @@
-package logext
+package logex
 
 import (
 	"context"

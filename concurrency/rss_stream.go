@@ -551,7 +551,7 @@ func NewFetcher(uri string) Fetcher {
 			})
 		}
 	}
-	f.feed = rss.New(1 /*minimum interval in minutes*/, true /*respect limit*/, newChans, newItems)
+	f.feed = rss.NewParser(1 /*minimum interval in minutes*/, true /*respect limit*/, newChans, newItems)
 	return f
 }
 

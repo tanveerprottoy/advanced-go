@@ -29,6 +29,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	default:
 		// continue processing the request
+		log.Println("processing request")
 	}
 
 }

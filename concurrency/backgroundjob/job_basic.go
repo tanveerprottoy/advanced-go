@@ -72,7 +72,7 @@ func ExecuterBasic() {
 
 	listenForWork()
 
-	<-waitToExit()
+	<-waitToExitBasic()
 
 	fmt.Println("exiting")
 }

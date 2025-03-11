@@ -1,4 +1,4 @@
-package ioext
+package ex
 
 import (
 	"crypto/sha256"

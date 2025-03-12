@@ -4,6 +4,7 @@ go 1.22
 
 require (
 	github.com/mmcdole/gofeed v1.3.0
+	golang.org/x/sync v0.11.0
 	golang.org/x/text v0.22.0
 )
 

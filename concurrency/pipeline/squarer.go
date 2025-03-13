@@ -2,6 +2,7 @@ package pipeline
 
 import (
 	"fmt"
+	"log"
 	"sync"
 )
 
@@ -39,7 +40,7 @@ func gen(nums ...int) <-chan int {
 // the outbound channel:
 func sq(in <-chan int) <-chan int {
 	out := make(chan int)
-	
+
 	go func() {
 		for n := range in {
 			out <- n * n
@@ -47,8 +48,17 @@ func sq(in <-chan int) <-chan int {
 
 		close(out)
 	}()
-	
+
 	return out
+}
+
+// sink/consumer function that receives values from the second
+// stage and prints each one,
+// until the channel is closed
+func sink(in <-chan int) {
+	for n := range in {
+		log.Println(n)
+	}
 }
 
 // The Executer function sets up the pipeline and runs the final stage:
@@ -62,6 +72,9 @@ func ExecuterSquarer() {
 	// Consume the output.
 	fmt.Println(<-out) // 4
 	fmt.Println(<-out) // 9
+
+	// better way to consume the output
+	sink(out)
 }
 
 func ExLoop() {
@@ -91,14 +104,14 @@ func merge(cs ...<-chan int) <-chan int {
 		go output(c)
 	}
 
-	// Start a goroutine to close out once all the output goroutines are
-	// done.  This must start after the wg.Add call.
+	// Start a goroutine to close out once all the output goroutines are done.
+	// This must start after the wg.Add call.
 	go func() {
 		wg.Wait()
 
 		close(out)
 	}()
-	
+
 	return out
 }
 

@@ -84,6 +84,11 @@ func ExLoop() {
 	}
 }
 
+// merge reads from multiple channels and combine them
+// this is a fan in pattern
+// A function can read from multiple inputs and proceed until all are closed by multiplexing
+// the input channels onto a single channel that’s closed when all the inputs are closed.
+// This is called fan-in.
 func merge(cs ...<-chan int) <-chan int {
 	var wg sync.WaitGroup
 	out := make(chan int)
@@ -119,6 +124,10 @@ func ExecuterSquarerFan() {
 	in := gen(2, 3)
 
 	// Distribute the sq work across two goroutines that both read from in.
+	// here a single channel is being read by same function multiple times
+	// Multiple functions can read from the same channel until that channel is closed;
+	// this is called fan-out. This provides a way to distribute work amongst a group of
+	// workers to parallelize CPU use and I/O.
 	c1 := sq(in)
 	c2 := sq(in)
 

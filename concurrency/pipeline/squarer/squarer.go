@@ -1,4 +1,4 @@
-package pipeline
+package squarer
 
 import (
 	"fmt"
@@ -107,6 +107,37 @@ func merge(cs ...<-chan int) <-chan int {
 
 	for _, c := range cs {
 		go output(c)
+	}
+
+	// Start a goroutine to close out once all the output goroutines are done.
+	// This must start after the wg.Add call.
+	go func() {
+		wg.Wait()
+
+		close(out)
+	}()
+
+	return out
+}
+
+func output(c <-chan int, out chan<- int, wg *sync.WaitGroup) {
+	// Start an output goroutine for each input channel in cs.  output
+	// copies values from c to out until c is closed, then calls wg.Done.
+	for n := range c {
+		out <- n
+	}
+
+	wg.Done()
+}
+
+func merge2(cs ...<-chan int) <-chan int {
+	var wg sync.WaitGroup
+	out := make(chan int)
+
+	wg.Add(len(cs))
+
+	for _, c := range cs {
+		go output(c, out, &wg)
 	}
 
 	// Start a goroutine to close out once all the output goroutines are done.

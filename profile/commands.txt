@@ -1,0 +1,16 @@
+As for how to access the information from the Go compiler's escape analysis, 
+the simplest way is through a debug flag supported by the Go compiler that describes 
+all optimizations it applied or did not apply to some package in a text format. 
+This includes whether or not values escape. 
+Try the following command, where [package] is some Go package path.
+
+$ go build -gcflags=-m=3 [package]
+
+The first step to profiling a Go program is to enable 
+profiling. Support for profiling benchmarks built with 
+the standard testing package is built into go test. 
+For example, the following command runs benchmarks in 
+the current directory and writes the CPU and memory 
+profiles to cpu.prof and mem.prof:
+
+go test -cpuprofile cpu.prof -memprofile mem.prof -bench .

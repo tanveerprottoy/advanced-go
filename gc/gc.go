@@ -1,11 +1,20 @@
-package gccfg
+package gc
 
 import (
 	"log"
 	"os"
+	"runtime"
 	"runtime/debug"
 	"runtime/metrics"
 )
+
+// Object — An object is a dynamically allocated piece of memory that contains one or 
+// more Go values.
+
+// Pointer — A memory address that references any value within an object. This naturally
+// includes Go values of the form *T, but also includes parts of built-in Go values. 
+// Strings, slices, channels, maps, and interface values all contain memory addresses 
+// that the GC must trace.
 
 // GOGC may be configured through either the GOGC environment variable
 // (which all Go programs recognize), or through the SetGCPercent API in
@@ -40,6 +49,10 @@ func mem() {
 	log.Printf("GOMEMLIMIT after set: %s\n", os.Getenv("GOMEMLIMIT"))
 
 	log.Printf("metrics: %v\n", metrics.All())
+}
+
+func runGC() {
+	runtime.GC()
 }
 
 func Executer() {

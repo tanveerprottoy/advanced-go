@@ -1,0 +1,23 @@
+Debugging is the process of identifying why a program misbehaves. Debuggers allow us to understand a program’s execution flow and current state. There are several styles of debugging; this section will only focus on attaching a debugger to a program and core dump debugging.
+
+Go users mostly use the following debuggers:
+
+Delve: Delve is a debugger for the Go programming language. It has support for Go’s runtime concepts and built-in types. Delve is trying to be a fully featured reliable debugger for Go programs.
+GDB: Go provides GDB support via the standard Go compiler and Gccgo. The stack management, threading, and runtime contain aspects that differ enough from the execution model GDB expects that they can confuse the debugger, even when the program is compiled with gccgo. Even though GDB can be used to debug Go programs, it is not ideal and may create confusion.
+How well do debuggers work with Go programs?
+
+The gc compiler performs optimizations such as function inlining and variable registerization. These optimizations sometimes make debugging with debuggers harder. There is an ongoing effort to improve the quality of the DWARF information generated for optimized binaries. Until those improvements are available, we recommend disabling optimizations when building the code being debugged. The following command builds a package with no compiler optimizations:
+
+
+$ go build -gcflags=all="-N -l"
+As part of the improvement effort, Go 1.10 introduced a new compiler flag -dwarflocationlists. The flag causes the compiler to add location lists that helps debuggers work with optimized binaries. The following command builds a package with optimizations but with the DWARF location lists:
+
+$ go build -gcflags="-dwarflocationlists=true"
+What’s the recommended debugger user interface?
+
+Even though both delve and gdb provides CLIs, most editor integrations and IDEs provides debugging-specific user interfaces.
+
+Is it possible to do postmortem debugging with Go programs?
+
+A core dump file is a file that contains the memory dump of a running process and its process status. It is primarily used for post-mortem debugging of a program and to understand its state while it is still running. These two cases make debugging of core dumps a good diagnostic aid to postmortem and analyze production services. It is possible to obtain core files from Go programs and use delve or gdb to debug, see the core dump debugging page for a step-by-step guide.
+

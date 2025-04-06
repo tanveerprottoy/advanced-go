@@ -1,0 +1,28 @@
+goos: linux
+goarch: amd64
+pkg: github.com/tanveerprottoy/advanced-go/testex/stringsex
+cpu: AMD Ryzen 5 4500U with Radeon Graphics         
+BenchmarkConcatenateBuffer-6   	 7783444	       164.7 ns/op	      80 B/op	       2 allocs/op
+BenchmarkConcatenateJoin-6     	10639566	       105.7 ns/op	      16 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-2-6         	19037164	        70.75 ns/op	       4 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-2-6       	 7244358	       159.0 ns/op	      68 B/op	       2 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-16-6        	 8911699	       119.3 ns/op	      32 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-16-6      	 7926978	       181.1 ns/op	      96 B/op	       2 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-128-6       	 6191647	       187.5 ns/op	     256 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-128-6     	 2456138	       497.9 ns/op	     640 B/op	       3 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-1024-6      	 1703046	       695.6 ns/op	    2048 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-1024-6    	  543892	      1900 ns/op	    5120 B/op	       3 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-8192-6      	  250987	      4293 ns/op	   16384 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-8192-6    	   95145	     11656 ns/op	   40960 B/op	       3 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-65536-6     	   36066	     35772 ns/op	  131073 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-65536-6   	   14838	     86915 ns/op	  327682 B/op	       3 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-524288-6    	    5706	    203309 ns/op	 1048579 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-524288-6  	    2332	    638485 ns/op	 2621449 B/op	       3 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-4194304-6   	    1110	   1019256 ns/op	 8388615 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-4194304-6 	     258	   4626069 ns/op	20971525 B/op	       3 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-16777216-6  	     300	   3828973 ns/op	33554434 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-16777216-6         	      80	  13836425 ns/op	83886094 B/op	       3 allocs/op
+BenchmarkConcatenation/ConcatenateJoin-134217728-6          	      46	  33249491 ns/op	268435462 B/op	       1 allocs/op
+BenchmarkConcatenation/ConcatenateBuffer-134217728-6        	      14	  80007715 ns/op	671088653 B/op	       3 allocs/op
+PASS
+ok  	github.com/tanveerprottoy/advanced-go/testex/stringsex	36.820s

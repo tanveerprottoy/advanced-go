@@ -3,13 +3,15 @@ package retryclient
 import (
 	"bytes"
 	"io"
+	"log"
 	"math"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"time"
 )
 
-// CustomClient is a custom HTTP client that implements the Client interface
+// customClient is a custom HTTP client that implements the Client interface
 type customClient struct {
 	maxRetries int
 
@@ -38,8 +40,11 @@ func (c *customClient) backoff(retries int) time.Duration {
 	return time.Duration(math.Pow(2, float64(retries))) * time.Second
 }
 
-func (c *customClient) jitter(max, min, attempts int) int {
+// jitter adds a random jitter to the backoff time
+func (c *customClient) jitter(max, attempts int) time.Duration {
+	rnd := rand.Intn(max)
 
+	return time.Duration(int(math.Pow(2, float64(attempts)))*rnd) * time.Millisecond
 }
 
 func (c *customClient) restoreRequestBody(req *http.Request) error {
@@ -97,15 +102,15 @@ func (c *customClient) Request(req *http.Request) (*http.Response, error) {
 	var attempts int
 
 	var (
-		res         *http.Response
-		err         error
-		shouldRetry bool
+		res *http.Response
+		err error
+		// shouldRetry bool
 	)
 
 	for attempts < c.maxRetries {
 		// increment attempts
 		attempts++
-		
+
 		// reusing a request body can be a bit tricky because the
 		// io.ReadCloser interface, which is the type of r.Body in an
 		// http.Request, is designed for single consumption. Once you've read the body, the underlying reader is often at its end, and attempting to read it again will yield an empty result or an error.
@@ -121,7 +126,11 @@ func (c *customClient) Request(req *http.Request) (*http.Response, error) {
 			// check if error is temporary
 			if c.isRetryableError(err) {
 				// wait for backoff time
-				time.Sleep(c.backoff(attempts + 1))
+
+				// temp
+				log.Printf("backoff: %v\njitter: %v\n", c.backoff(attempts), c.jitter(10, attempts))
+
+				time.Sleep(c.backoff(attempts) + c.jitter(10, attempts))
 			}
 
 			return nil, err

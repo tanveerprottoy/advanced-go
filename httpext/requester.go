@@ -1,4 +1,4 @@
-package retryclient
+package httpext
 
 import (
 	"context"
@@ -13,6 +13,7 @@ type Requester[R, E any] interface {
 		url string,
 		header http.Header,
 		body io.Reader,
+		retry bool,
 	) (*R, *E, error)
 
 	RequestRaw(
@@ -21,5 +22,6 @@ type Requester[R, E any] interface {
 		url string,
 		header http.Header,
 		body io.Reader,
+		retry bool,
 	) (int, []byte, error)
 }

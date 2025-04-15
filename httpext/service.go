@@ -1,4 +1,4 @@
-package retryclient
+package httpext
 
 import (
 	"context"
@@ -49,6 +49,7 @@ func (s *service[R, E]) Request(
 	url string,
 	header http.Header,
 	body io.Reader,
+	retry bool,
 ) (*R, *E, error) {
 	if ctx == nil {
 		var cancel context.CancelFunc
@@ -61,28 +62,28 @@ func (s *service[R, E]) Request(
 		return nil, nil, err
 	}
 
-	res, err := s.client.Do(req)
+	resp, err := s.client.Do(req, retry)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	defer res.Body.Close()
+	defer resp.Body.Close()
 
-	if res.StatusCode >= http.StatusOK && res.StatusCode < http.StatusMultipleChoices {
-		// res ok, parse response body to type
+	if resp.StatusCode >= http.StatusOK && resp.StatusCode < http.StatusMultipleChoices {
+		// resp ok, parse response body to type
 		var r R
 
-		err := json.NewDecoder(res.Body).Decode(&r)
+		err := json.NewDecoder(resp.Body).Decode(&r)
 		if err != nil {
 			return nil, nil, err
 		}
 
 		return &r, nil, nil
 	} else {
-		// res not ok, parse error
+		// resp not ok, parse error
 		var e E
 
-		err := json.NewDecoder(res.Body).Decode(&e)
+		err := json.NewDecoder(resp.Body).Decode(&e)
 		if err != nil {
 			return nil, nil, err
 		}
@@ -100,23 +101,24 @@ func (s *service[R, E]) RequestRaw(
 	url string,
 	header http.Header,
 	body io.Reader,
+	retry bool,
 ) (int, []byte, error) {
 	req, err := s.buildRequest(ctx, method, url, header, body)
 	if err != nil {
 		return 0, nil, err
 	}
 
-	res, err := s.client.Do(req)
+	resp, err := s.client.Do(req, retry)
 	if err != nil {
 		return 0, nil, err
 	}
 
-	defer res.Body.Close()
+	defer resp.Body.Close()
 
-	b, err := io.ReadAll(res.Body)
+	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return 0, nil, err
 	}
 
-	return res.StatusCode, b, nil
+	return resp.StatusCode, b, nil
 }

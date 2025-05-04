@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// NOT NECESSARY, THAT'S WHY NOT INCLUDED IN stdlib-ext repo
 // RoundTripper is a custom HTTP round tripper that implements the http.RoundTripper interface
 // this Roundtripper will be used when transport options are set in the customClient
 type RoundTripper struct {
